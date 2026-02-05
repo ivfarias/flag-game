@@ -489,7 +489,7 @@
     if (state.mode !== "playing") return;
     const rect = canvas.getBoundingClientRect();
     const padding = rect.width * 0.04;
-    const panelHeight = rect.height * 0.06;
+    const panelHeight = rect.height * 0.07;
     const panelWidth = rect.width * 0.92;
     const timeRemaining = state.current ? state.current.timeRemaining : 0;
     const timeColor =
@@ -502,7 +502,7 @@
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = "#1f2933";
-    ctx.font = `${Math.round(rect.height * 0.025)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.026)}px "Manrope"`;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     const y = padding + panelHeight / 2;
@@ -582,7 +582,7 @@
     const rect = canvas.getBoundingClientRect();
     if (!state.resultText) return;
     ctx.save();
-    ctx.font = `${Math.round(rect.height * 0.028)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = state.resultTone === "good" ? "#2e7d32" : "#d93025";
@@ -590,7 +590,7 @@
       state.layout.optionsTop !== null ? state.layout.optionsTop : rect.height * 0.72;
     const cardBottom =
       state.layout.cardBottom !== null ? state.layout.cardBottom : rect.height * 0.46;
-    const gap = Math.max(18, rect.height * 0.03);
+    const gap = Math.max(24, rect.height * 0.04);
     let y = (cardBottom + optionsTop) / 2;
     if (y > optionsTop - gap) y = optionsTop - gap;
     if (y < cardBottom + gap) y = cardBottom + gap;
@@ -601,20 +601,20 @@
   function renderFlagCard() {
     if (state.mode !== "playing" || !state.current) return;
     const rect = canvas.getBoundingClientRect();
-    const cardWidth = rect.width * 0.58;
-    let cardHeight = rect.height * 0.28;
+    const cardWidth = rect.width * 0.60;
+    let cardHeight = rect.height * 0.32;
     const x = rect.width / 2 - cardWidth / 2;
-    let y = rect.height * 0.12;
+    let y = rect.height * 0.14;
     const optionsRect = optionsEl.getBoundingClientRect();
     if (optionsRect && optionsRect.height) {
       const optionsTop = optionsRect.top - rect.top;
-      const margin = Math.max(16, rect.height * 0.04);
+      const margin = Math.max(24, rect.height * 0.06);
       const maxBottom = optionsTop - margin;
       if (y + cardHeight > maxBottom) {
-        cardHeight = Math.max(rect.height * 0.22, maxBottom - y);
+        cardHeight = Math.max(rect.height * 0.24, maxBottom - y);
       }
       if (y + cardHeight > maxBottom) {
-        y = Math.max(rect.height * 0.06, maxBottom - cardHeight);
+        y = Math.max(rect.height * 0.08, maxBottom - cardHeight);
       }
       state.layout.optionsTop = optionsTop;
     } else {
@@ -664,9 +664,10 @@
     if (state.mode !== "over" || !state.endSummary) return;
     const rect = canvas.getBoundingClientRect();
     const cardWidth = rect.width * 0.72;
-    const cardHeight = rect.height * 0.58;
+    const cardHeight = rect.height * 0.62;
     const x = rect.width / 2 - cardWidth / 2;
-    const y = rect.height / 2 - cardHeight / 2;
+    // Offset card upward slightly to make room for the "Play Again" button below
+    const y = rect.height / 2 - cardHeight / 2 - rect.height * 0.05;
     ctx.save();
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#e2e6ea";
@@ -678,13 +679,13 @@
     ctx.fillStyle = "#111827";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    ctx.font = `${Math.round(rect.height * 0.05)}px "Sora"`;
-    ctx.fillText(state.endTitle, rect.width / 2, y + cardHeight * 0.12);
+    ctx.font = `${Math.round(rect.height * 0.052)}px "Sora"`;
+    ctx.fillText(state.endTitle, rect.width / 2, y + cardHeight * 0.1);
 
-    ctx.font = `${Math.round(rect.height * 0.045)}px "Manrope"`;
-    ctx.fillText(`Total Score: ${state.endSummary.total}`, rect.width / 2, y + cardHeight * 0.28);
+    ctx.font = `${Math.round(rect.height * 0.05)}px "Manrope"`;
+    ctx.fillText(`Total Score: ${state.endSummary.total}`, rect.width / 2, y + cardHeight * 0.25);
 
-    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.032)}px "Manrope"`;
     const lines = [
       `Questions answered: ${state.endSummary.answered}/${TOTAL_QUESTIONS}`,
       `Wrong answers: ${state.endSummary.wrongs}/${MAX_WRONG}`,
@@ -693,18 +694,18 @@
       `Perfect run bonus: ${state.endSummary.perfectBonus}`,
       `Time left bonus: ${state.endSummary.timeBonus}`,
     ];
-    const lineHeight = rect.height * 0.04;
-    let lineY = y + cardHeight * 0.42;
+    const lineHeight = rect.height * 0.045;
+    let lineY = y + cardHeight * 0.40;
     lines.forEach((line) => {
       ctx.fillText(line, rect.width / 2, lineY);
       lineY += lineHeight;
     });
 
-    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.032)}px "Manrope"`;
     const highScoreText = state.newRecord
       ? `New Record! ${state.highScore}`
       : `High Score: ${state.highScore}`;
-    ctx.fillText(highScoreText, rect.width / 2, y + cardHeight * 0.82);
+    ctx.fillText(highScoreText, rect.width / 2, y + cardHeight * 0.84);
     ctx.restore();
   }
 
