@@ -1,0 +1,291 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Sora:wght@600;700&display=swap");
+
+:root {
+  color-scheme: light;
+  font-family: "Sora", "Manrope", sans-serif;
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --ink: #14181f;
+  --muted: #5f6b7a;
+  --line: #e2e6ea;
+  --success: #2e7d32;
+  --warning: #f4b400;
+  --danger: #d93025;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-family: "Manrope", sans-serif;
+  overflow: hidden;
+}
+
+#game {
+  position: relative;
+  width: min(94vw, 980px);
+  aspect-ratio: 3 / 2;
+  max-height: 88vh;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  background: var(--card);
+  display: block;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 50px rgba(20, 24, 31, 0.08);
+}
+
+#ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.screen {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.title {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(26px, 3.6vw, 40px);
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(14px, 1.8vw, 18px);
+  margin: 6px 0 18px;
+  color: var(--muted);
+}
+
+.primary-btn {
+  font-family: "Sora", sans-serif;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: clamp(16px, 2vw, 20px);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.18);
+  touch-action: manipulation;
+}
+
+.help {
+  margin-top: 16px;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(12px, 1.6vw, 16px);
+  color: var(--muted);
+}
+
+.key {
+  background: #eef0f3;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+#hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  justify-content: space-between;
+}
+
+.hud-row {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(12px, 1.6vw, 16px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#question-panel {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#flag-display {
+  display: none;
+}
+
+.options {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(12px, 3vh, 28px);
+  transform: translateX(-50%);
+  width: min(92%, 820px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.option-btn {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(14px, 2.2vw, 20px);
+  padding: 14px 12px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  background: #f0f1f3;
+  color: #111827;
+  cursor: pointer;
+  min-height: 56px;
+  touch-action: manipulation;
+  transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.option-btn:active {
+  transform: scale(0.98);
+}
+
+.option-btn.correct {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+}
+
+.option-btn.wrong {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.2);
+}
+
+.option-btn.slot-0 {
+  background: #f7b7b2;
+}
+
+.option-btn.slot-1 {
+  background: #fce7a5;
+}
+
+.option-btn.slot-2 {
+  background: #b7d7ff;
+}
+
+.option-btn.slot-3 {
+  background: #bdecc9;
+}
+
+#result-panel {
+  align-self: center;
+  padding: 10px 18px;
+  background: transparent;
+  border-radius: 0;
+  font-size: clamp(14px, 2vw, 18px);
+  text-align: center;
+}
+
+#end-screen {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.final-score {
+  font-size: clamp(22px, 3vw, 32px);
+  margin: 12px 0;
+}
+
+.breakdown {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(13px, 1.8vw, 16px);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.highscore {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(12px, 1.6vw, 16px);
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+.record-banner {
+  display: none;
+}
+
+#start-screen {
+  align-self: center;
+  width: min(92%, 720px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 40px);
+  text-align: center;
+  box-shadow: 0 14px 30px rgba(20, 24, 31, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#play-screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+#play-screen.active {
+  display: flex;
+  pointer-events: none;
+}
+
+#question-panel {
+  pointer-events: auto;
+}
+
+#result-panel {
+  display: none;
+}
+
+#end-screen .title,
+#end-screen .final-score,
+#end-screen .breakdown,
+#end-screen .highscore {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .options {
+    grid-template-columns: 1fr;
+  }
+}
