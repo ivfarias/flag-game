@@ -664,9 +664,10 @@
     if (state.mode !== "over" || !state.endSummary) return;
     const rect = canvas.getBoundingClientRect();
     const cardWidth = rect.width * 0.72;
-    const cardHeight = rect.height * 0.58;
+    const cardHeight = rect.height * 0.62;
     const x = rect.width / 2 - cardWidth / 2;
-    const y = rect.height / 2 - cardHeight / 2;
+    // Offset card upward slightly to make room for the "Play Again" button below
+    const y = rect.height / 2 - cardHeight / 2 - rect.height * 0.05;
     ctx.save();
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#e2e6ea";
@@ -678,13 +679,13 @@
     ctx.fillStyle = "#111827";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    ctx.font = `${Math.round(rect.height * 0.05)}px "Sora"`;
-    ctx.fillText(state.endTitle, rect.width / 2, y + cardHeight * 0.12);
+    ctx.font = `${Math.round(rect.height * 0.052)}px "Sora"`;
+    ctx.fillText(state.endTitle, rect.width / 2, y + cardHeight * 0.1);
 
-    ctx.font = `${Math.round(rect.height * 0.045)}px "Manrope"`;
-    ctx.fillText(`Total Score: ${state.endSummary.total}`, rect.width / 2, y + cardHeight * 0.28);
+    ctx.font = `${Math.round(rect.height * 0.05)}px "Manrope"`;
+    ctx.fillText(`Total Score: ${state.endSummary.total}`, rect.width / 2, y + cardHeight * 0.25);
 
-    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.032)}px "Manrope"`;
     const lines = [
       `Questions answered: ${state.endSummary.answered}/${TOTAL_QUESTIONS}`,
       `Wrong answers: ${state.endSummary.wrongs}/${MAX_WRONG}`,
@@ -693,18 +694,18 @@
       `Perfect run bonus: ${state.endSummary.perfectBonus}`,
       `Time left bonus: ${state.endSummary.timeBonus}`,
     ];
-    const lineHeight = rect.height * 0.04;
-    let lineY = y + cardHeight * 0.42;
+    const lineHeight = rect.height * 0.045;
+    let lineY = y + cardHeight * 0.40;
     lines.forEach((line) => {
       ctx.fillText(line, rect.width / 2, lineY);
       lineY += lineHeight;
     });
 
-    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.032)}px "Manrope"`;
     const highScoreText = state.newRecord
       ? `New Record! ${state.highScore}`
       : `High Score: ${state.highScore}`;
-    ctx.fillText(highScoreText, rect.width / 2, y + cardHeight * 0.82);
+    ctx.fillText(highScoreText, rect.width / 2, y + cardHeight * 0.84);
     ctx.restore();
   }
 
