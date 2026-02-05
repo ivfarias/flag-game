@@ -489,7 +489,7 @@
     if (state.mode !== "playing") return;
     const rect = canvas.getBoundingClientRect();
     const padding = rect.width * 0.04;
-    const panelHeight = rect.height * 0.06;
+    const panelHeight = rect.height * 0.07;
     const panelWidth = rect.width * 0.92;
     const timeRemaining = state.current ? state.current.timeRemaining : 0;
     const timeColor =
@@ -502,7 +502,7 @@
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = "#1f2933";
-    ctx.font = `${Math.round(rect.height * 0.025)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.026)}px "Manrope"`;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     const y = padding + panelHeight / 2;
@@ -582,7 +582,7 @@
     const rect = canvas.getBoundingClientRect();
     if (!state.resultText) return;
     ctx.save();
-    ctx.font = `${Math.round(rect.height * 0.028)}px "Manrope"`;
+    ctx.font = `${Math.round(rect.height * 0.03)}px "Manrope"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = state.resultTone === "good" ? "#2e7d32" : "#d93025";
@@ -590,7 +590,7 @@
       state.layout.optionsTop !== null ? state.layout.optionsTop : rect.height * 0.72;
     const cardBottom =
       state.layout.cardBottom !== null ? state.layout.cardBottom : rect.height * 0.46;
-    const gap = Math.max(18, rect.height * 0.03);
+    const gap = Math.max(24, rect.height * 0.04);
     let y = (cardBottom + optionsTop) / 2;
     if (y > optionsTop - gap) y = optionsTop - gap;
     if (y < cardBottom + gap) y = cardBottom + gap;
@@ -601,20 +601,20 @@
   function renderFlagCard() {
     if (state.mode !== "playing" || !state.current) return;
     const rect = canvas.getBoundingClientRect();
-    const cardWidth = rect.width * 0.58;
-    let cardHeight = rect.height * 0.28;
+    const cardWidth = rect.width * 0.60;
+    let cardHeight = rect.height * 0.32;
     const x = rect.width / 2 - cardWidth / 2;
-    let y = rect.height * 0.12;
+    let y = rect.height * 0.14;
     const optionsRect = optionsEl.getBoundingClientRect();
     if (optionsRect && optionsRect.height) {
       const optionsTop = optionsRect.top - rect.top;
-      const margin = Math.max(16, rect.height * 0.04);
+      const margin = Math.max(24, rect.height * 0.06);
       const maxBottom = optionsTop - margin;
       if (y + cardHeight > maxBottom) {
-        cardHeight = Math.max(rect.height * 0.22, maxBottom - y);
+        cardHeight = Math.max(rect.height * 0.24, maxBottom - y);
       }
       if (y + cardHeight > maxBottom) {
-        y = Math.max(rect.height * 0.06, maxBottom - cardHeight);
+        y = Math.max(rect.height * 0.08, maxBottom - cardHeight);
       }
       state.layout.optionsTop = optionsTop;
     } else {
